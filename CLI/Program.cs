@@ -37,7 +37,7 @@ namespace SiiParserSCS
 
             private string _directoryPath;
 
-            [Option('d', "dir-path", Required = false, HelpText = @"Directory that has .sii files to decode")]
+            [Option('d', "dir-path", Required = false, HelpText = @"Path to directory that has .sii files that need to be parsed")]
             public string DirectoryPath
             {
                 get { return _directoryPath; }
