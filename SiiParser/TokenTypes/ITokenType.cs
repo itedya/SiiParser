@@ -6,5 +6,6 @@ namespace SiiParser.TokenTypes
     {
         Regex Regex { get; }
         string Identifier { get; }
+        bool IsValueType { get; }
     }
 }

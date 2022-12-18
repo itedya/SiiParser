@@ -17,12 +17,12 @@ namespace SiiParser.Engines
 
         public string Process(string contents, string processedFileDirectory)
         {
-            CaptureCollection captures = this.Regex.Match(contents).Captures;
-            if (captures.Count == 0) return contents;
+            MatchCollection matches = this.Regex.Matches(contents);
+            if (matches.Count == 0) return contents;
 
-            foreach (Capture capture in captures)
+            foreach (Match match in matches)
             {
-                string includeFilePath = capture.Value
+                string includeFilePath = match.Value
                     .Replace("@include \"", "")
                     .Replace("\"", "");
 
@@ -37,7 +37,7 @@ namespace SiiParser.Engines
                 }
 
                 string includeFileContents = File.ReadAllText(includeFilePath);
-                contents = contents.Replace(capture.Value, includeFileContents);
+                contents = contents.Replace(match.Value, includeFileContents);
             }
 
             return contents;

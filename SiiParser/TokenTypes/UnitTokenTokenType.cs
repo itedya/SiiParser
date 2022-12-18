@@ -7,11 +7,14 @@ namespace SiiParser.TokenTypes
     {
         public Regex Regex { get; }
         public string Identifier { get; }
+        public bool IsValueType { get; }
+
 
         public UnitTokenTokenType()
         {
             this.Regex = new Regex("({|}|SiiNunit)");
             this.Identifier = TokenType.UnitToken;
+            this.IsValueType = false;
         }
     }
 }

@@ -45,6 +45,7 @@
     <ItemGroup>
         <Compile Include="Attributes\SiiAttribute.cs" />
         <Compile Include="Attributes\SiiUnit.cs" />
+        <Compile Include="Classes\Vector3Int.cs" />
         <Compile Include="Engines\AttributesEngine.cs" />
         <Compile Include="Engines\UnitTokensEngine.cs" />
         <Compile Include="Engines\CommentsEngine.cs" />
@@ -65,6 +66,7 @@
         <Compile Include="TokenTypes\StringTokenType.cs" />
         <Compile Include="TokenTypes\TokenTokenType.cs" />
         <Compile Include="TokenTypes\UnitTokenTokenType.cs" />
+        <Compile Include="TokenTypes\Vector3IntTokenType.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Numerics;
+using SiiParser.Classes;
 using SiiParser.Enums;
 using SiiParser.Exceptions;
 using SiiParser.TokenTypes;
@@ -29,7 +31,8 @@ namespace SiiParser.Engines
             if (secondRegexMatch.TokenType != TokenType.Float &&
                 secondRegexMatch.TokenType != TokenType.Int &&
                 secondRegexMatch.TokenType != TokenType.String &&
-                secondRegexMatch.TokenType != TokenType.Token)
+                secondRegexMatch.TokenType != TokenType.Token &&
+                secondRegexMatch.TokenType != TokenType.Vector3Int)
             {
                 throw new ParseException("After attribute name, there should be a value!");
             }
@@ -108,6 +111,19 @@ namespace SiiParser.Engines
                 {
                     if (gameClass[attributeName] == null) gameClass[attributeName] = new List<string>();
                     ((List<string>)gameClass[attributeName]).Add(value);
+                }
+                else
+                {
+                    gameClass[attributeName] = value;
+                }
+            } else if (valueMatch.TokenType == TokenType.Vector3Int)
+            {
+                Vector3Int value = Vector3IntTokenType.Parse(valueMatch.Value);
+                
+                if (isArrayItem)
+                {
+                    if (gameClass[attributeName] == null) gameClass[attributeName] = new List<Vector3Int>();
+                    ((List<Vector3Int>)gameClass[attributeName]).Add(value);
                 }
                 else
                 {

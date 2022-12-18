@@ -183,7 +183,8 @@ namespace SiiParser
                 else if (regexMatch.TokenType == TokenType.Float ||
                          regexMatch.TokenType == TokenType.Int ||
                          regexMatch.TokenType == TokenType.String ||
-                         regexMatch.TokenType == TokenType.Token)
+                         regexMatch.TokenType == TokenType.Token ||
+                         regexMatch.TokenType == TokenType.Vector3Int)
                 {
                     throw new ParseException(String.Format("Parser didn't see any attribute name to value: {0}",
                         regexMatch.Value));

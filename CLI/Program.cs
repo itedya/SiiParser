@@ -99,6 +99,7 @@ namespace SiiParserSCS
 
             Parser parser = new Parser(new[]
             {
+                typeof(CountryData),
                 typeof(AccessoryChassisData),
                 typeof(AccessoryTruckData),
                 typeof(AccessoryTransmissionData),

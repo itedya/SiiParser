@@ -1,9 +1,10 @@
-﻿using SiiParser.Attributes;
+﻿using SiiParser;
+using SiiParser.Attributes;
 
 namespace SiiParserSCS.GameClasses
 {
     [SiiUnit("country_data")]
-    public class CountryData
+    public class CountryData : GameClass
     {
         [SiiAttribute("country_id")]
         public int CountryId { get; set; }

@@ -7,11 +7,14 @@ namespace SiiParser.TokenTypes
     {
         public Regex Regex { get; }
         public string Identifier { get; }
+        public bool IsValueType { get; }
+
 
         public FloatTokenType()
         {
             this.Regex = new Regex(@"(?<=[ :])-?\d+\.\d+(?=\n)");
             this.Identifier = TokenType.Float;
+            this.IsValueType = true;
         }
     }
 }
