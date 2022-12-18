@@ -2,10 +2,9 @@
 
 namespace SiiParser.TokenTypes
 {
-    interface ITokenType
+    public interface ITokenType
     {
         Regex Regex { get; }
         string Identifier { get; }
-        bool IsValueType { get; }
     }
 }

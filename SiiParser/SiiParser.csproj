@@ -56,17 +56,20 @@
         <Compile Include="GameClass.cs" />
         <Compile Include="Parser.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="RegexMatch.cs" />
         <Compile Include="TokenTypes\AttributeNameTokenType.cs" />
         <Compile Include="TokenTypes\ClassTypeTokenType.cs" />
-        <Compile Include="TokenTypes\FloatTokenType.cs" />
-        <Compile Include="TokenTypes\IntTokenType.cs" />
         <Compile Include="TokenTypes\ITokenType.cs" />
         <Compile Include="TokenTypes\NamespaceTokenType.cs" />
         <Compile Include="TokenTypes\NewLineTokenType.cs" />
-        <Compile Include="TokenTypes\StringTokenType.cs" />
-        <Compile Include="TokenTypes\TokenTokenType.cs" />
         <Compile Include="TokenTypes\UnitTokenTokenType.cs" />
-        <Compile Include="TokenTypes\Vector3IntTokenType.cs" />
+        <Compile Include="TokenTypes\Value\FloatTokenType.cs" />
+        <Compile Include="TokenTypes\Value\IntTokenType.cs" />
+        <Compile Include="TokenTypes\Value\IValueTokenType.cs" />
+        <Compile Include="TokenTypes\Value\StringTokenType.cs" />
+        <Compile Include="TokenTypes\Value\TokenTokenType.cs" />
+        <Compile Include="TokenTypes\Value\Vector3IntTokenType.cs" />
+        <Compile Include="TokenTypes\Value\Vector4TokenType.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

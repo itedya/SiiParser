@@ -7,14 +7,11 @@ namespace SiiParser.TokenTypes
     {
         public Regex Regex { get; }
         public string Identifier { get; }
-        public bool IsValueType { get; }
-
 
         public NewLineTokenType()
         {
             this.Regex = new Regex("\n");
             this.Identifier = TokenType.NewLine;
-            this.IsValueType = false;
         }
     }
 }

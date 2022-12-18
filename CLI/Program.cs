@@ -103,7 +103,8 @@ namespace SiiParserSCS
                 typeof(AccessoryChassisData),
                 typeof(AccessoryTruckData),
                 typeof(AccessoryTransmissionData),
-                typeof(AccessoryTruckData)
+                typeof(AccessoryTruckData),
+                typeof(LocalizationDb),
             }, false);
             IncludesEngine includesEngine = new IncludesEngine(rootPath);
 
@@ -121,7 +122,8 @@ namespace SiiParserSCS
                 typeof(AccessoryChassisData),
                 typeof(AccessoryTruckData),
                 typeof(AccessoryTransmissionData),
-                typeof(AccessoryTruckData)
+                typeof(AccessoryTruckData),
+                typeof(LocalizationDb)
             }, false);
             IncludesEngine includesEngine = new IncludesEngine(rootPath);
 

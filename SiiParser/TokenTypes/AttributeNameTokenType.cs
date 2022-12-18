@@ -7,13 +7,11 @@ namespace SiiParser.TokenTypes
     {
         public Regex Regex { get; }
         public string Identifier { get; }
-        public bool IsValueType { get; }
 
         public AttributeNameTokenType()
         {
-            this.Regex = new Regex(@"(?<=\t)\w+(\[(\d+)?\])?(?=:)");
+            this.Regex = new Regex(@"(?<=\n(\t|\s+))\w+(\[(\d+)?\])?(?=:)");
             this.Identifier = TokenType.AttributeName;
-            this.IsValueType = false;
         }
 
         private static Regex ArrayIndexRegex { get; } = new Regex(@"(?<=\[)\d+(?=\])");

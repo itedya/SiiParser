@@ -1,29 +1,25 @@
 ﻿using System;
-using System.Numerics;
 using System.Text.RegularExpressions;
 using SiiParser.Classes;
 using SiiParser.Enums;
 
-namespace SiiParser.TokenTypes
+namespace SiiParser.TokenTypes.Value
 {
-    public class Vector3IntTokenType : ITokenType
+    public class Vector3IntTokenType : IValueTokenType
     {
         public Regex Regex { get; }
         public string Identifier { get; }
-        public bool IsValueType { get; }
-
 
         public Vector3IntTokenType()
         {
-            this.Regex = new Regex(@"(?<=[ :])\(-?\d+, -?\d+, -?\d+\)(?=\n)");
+            this.Regex = new Regex(@"(?<=[ :])\(-?\d+, -?\d+, -?\d+\)(?=[\s\n])");
             this.Identifier = TokenType.Vector3Int;
-            this.IsValueType = true;
         }
 
-        public static Vector3Int Parse(string value)
+        public Object Parse(string value)
         {
-            value = value.Substring(0);
-            value = value.Substring(value.Length - 1);
+            value = value.Substring(1);
+            value = value.Substring(0, value.Length - 1);
 
             value = value.Replace(" ", "");
             string[] splittedString = value.Split(',');

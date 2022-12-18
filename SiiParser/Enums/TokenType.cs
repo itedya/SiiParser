@@ -12,5 +12,6 @@
         public static readonly string Token = "TOKEN";
         public static readonly string UnitToken = "UNIT_TOKEN";
         public static readonly string Vector3Int = "VECTOR_3_INT";
+        public static readonly string Vector4 = "VECTOR_4";
     }
 }

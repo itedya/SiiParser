@@ -9,32 +9,15 @@ using SiiParser.Engines;
 using SiiParser.Enums;
 using SiiParser.TokenTypes;
 using SiiParser.Exceptions;
+using SiiParser.TokenTypes.Value;
 
 namespace SiiParser
 {
-    public class RegexMatch
-    {
-        public string Value { get; }
-        public int Index { get; }
-        public int Length { get; }
-
-        public int EndIndex { get; }
-        public string TokenType { get; }
-
-        public RegexMatch(string value, int index, int length, string tokenTypeIdentifier)
-        {
-            this.Value = value;
-            this.Index = index;
-            this.Length = length;
-            this.EndIndex = index + length;
-            this.TokenType = tokenTypeIdentifier;
-        }
-    }
-
     public class Parser
     {
         private List<Type> ClassTypes { get; }
         private List<ITokenType> TokenTypes { get; }
+        private List<IValueTokenType> ValueTokenTypes { get; }
         private bool ThrowNotDefinedPropertyExceptions { get; }
 
         public Parser(Type[] classTypes, bool throwNotDefinedPropertyExceptions)
@@ -42,15 +25,19 @@ namespace SiiParser
             this.ClassTypes = classTypes.ToList();
             this.ThrowNotDefinedPropertyExceptions = throwNotDefinedPropertyExceptions;
 
+            this.ValueTokenTypes = new List<IValueTokenType>();
+            ValueTokenTypes.Add(new FloatTokenType());
+            ValueTokenTypes.Add(new IntTokenType());
+            ValueTokenTypes.Add(new StringTokenType());
+            ValueTokenTypes.Add(new TokenTokenType());
+            ValueTokenTypes.Add(new Vector3IntTokenType());
+            ValueTokenTypes.Add(new Vector4TokenType());
+
             this.TokenTypes = new List<ITokenType>();
             TokenTypes.Add(new AttributeNameTokenType());
-            TokenTypes.Add(new ClassTypeTokenType());
-            TokenTypes.Add(new FloatTokenType());
-            TokenTypes.Add(new IntTokenType());
-            TokenTypes.Add(new NamespaceTokenType());
+            TokenTypes.Add(new ClassTypeTokenType(classTypes));
+            TokenTypes.Add(new NamespaceTokenType(classTypes));
             TokenTypes.Add(new NewLineTokenType());
-            TokenTypes.Add(new StringTokenType());
-            TokenTypes.Add(new TokenTokenType());
             TokenTypes.Add(new UnitTokenTokenType());
         }
 
@@ -100,6 +87,12 @@ namespace SiiParser
                 regexMatches = ProcessMatchCollection(regexMatches, tokenType, tokenType.Regex.Matches(content));
             }
 
+            foreach (IValueTokenType valueTokenType in ValueTokenTypes)
+            {
+                regexMatches =
+                    ProcessMatchCollection(regexMatches, valueTokenType, valueTokenType.Regex.Matches(content));
+            }
+
             regexMatches = regexMatches.OrderBy(o => o.Index).ToList();
 
             if (regexMatches.Count == 0)
@@ -107,12 +100,13 @@ namespace SiiParser
                 throw new ParseException("No matches found, file is probably empty.");
             }
 
-            AttributesEngine attributesEngine = new AttributesEngine(regexMatches);
+            AttributesEngine attributesEngine = new AttributesEngine(regexMatches, ValueTokenTypes);
 
             List<GameClass> items = new List<GameClass>();
 
             for (var i = 0; i < regexMatches.Count; i++)
             {
+                Console.WriteLine("Processing match {0} of {1}", i + 1, regexMatches.Count);
                 RegexMatch regexMatch = regexMatches[i];
                 GameClass firstItem = (items.Count == 0) ? null : items.Last();
 
@@ -146,6 +140,7 @@ namespace SiiParser
 
                     // Create instance of game class and add it to parsed items
                     items.Add((GameClass)Activator.CreateInstance(type));
+                    continue;
                 }
                 // assign namespace
                 else if (regexMatch.TokenType == TokenType.Namespace)
@@ -180,11 +175,7 @@ namespace SiiParser
 
                     i += 2;
                 }
-                else if (regexMatch.TokenType == TokenType.Float ||
-                         regexMatch.TokenType == TokenType.Int ||
-                         regexMatch.TokenType == TokenType.String ||
-                         regexMatch.TokenType == TokenType.Token ||
-                         regexMatch.TokenType == TokenType.Vector3Int)
+                else if (ValueTokenTypes.FirstOrDefault(e => regexMatch.TokenType == e.Identifier) != null)
                 {
                     throw new ParseException(String.Format("Parser didn't see any attribute name to value: {0}",
                         regexMatch.Value));

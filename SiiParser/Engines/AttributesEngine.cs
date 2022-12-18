@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Numerics;
-using SiiParser.Classes;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SiiParser.Enums;
 using SiiParser.Exceptions;
 using SiiParser.TokenTypes;
+using SiiParser.TokenTypes.Value;
 
 namespace SiiParser.Engines
 {
@@ -17,10 +17,12 @@ namespace SiiParser.Engines
     public class AttributesEngine
     {
         private List<RegexMatch> Matches { get; set; }
+        private List<IValueTokenType> ValueTokenTypes { get; }
 
-        public AttributesEngine(List<RegexMatch> matches)
+        public AttributesEngine(List<RegexMatch> matches, List<IValueTokenType> valueTokenTypes)
         {
             this.Matches = matches;
+            this.ValueTokenTypes = valueTokenTypes;
         }
 
         public void CanAssignAttribute(
@@ -28,11 +30,7 @@ namespace SiiParser.Engines
             RegexMatch thirdRegexMatch
         )
         {
-            if (secondRegexMatch.TokenType != TokenType.Float &&
-                secondRegexMatch.TokenType != TokenType.Int &&
-                secondRegexMatch.TokenType != TokenType.String &&
-                secondRegexMatch.TokenType != TokenType.Token &&
-                secondRegexMatch.TokenType != TokenType.Vector3Int)
+            if (ValueTokenTypes.FirstOrDefault(e => secondRegexMatch.TokenType == e.Identifier) == null)
             {
                 throw new ParseException("After attribute name, there should be a value!");
             }
@@ -74,61 +72,18 @@ namespace SiiParser.Engines
 
             bool isArrayItem = attributeName.Contains("[]");
 
-            if (valueMatch.TokenType == TokenType.Int)
-            {
-                int value = int.Parse(valueMatch.Value);
+            IValueTokenType valueTokenType = ValueTokenTypes.First(e => valueMatch.TokenType == e.Identifier);
 
-                if (isArrayItem)
-                {
-                    if (gameClass[attributeName] == null) gameClass[attributeName] = new List<int>();
-                    ((List<int>)gameClass[attributeName]).Add(value);
-                }
-                else
-                {
-                    gameClass[attributeName] = value;
-                }
+            Object value = valueTokenType.Parse(valueMatch.Value);
+
+            if (isArrayItem)
+            {
+                if (gameClass[attributeName] == null) gameClass[attributeName] = new List<Object>();
+                ((List<Object>)gameClass[attributeName]).Add(value);
             }
-            else if (valueMatch.TokenType == TokenType.Float)
+            else
             {
-                float value = float.Parse(valueMatch.Value, CultureInfo.InvariantCulture);
-
-                if (isArrayItem)
-                {
-                    if (gameClass[attributeName] == null) gameClass[attributeName] = new List<float>();
-                    ((List<float>)gameClass[attributeName]).Add(value);
-                }
-                else
-                {
-                    gameClass[attributeName] = value;
-                }
-            }
-            else if (valueMatch.TokenType == TokenType.String || valueMatch.TokenType == TokenType.Token)
-            {
-                string value = valueMatch.Value.Substring(1);
-                value = value.Substring(0, value.Length - 1);
-
-                if (isArrayItem)
-                {
-                    if (gameClass[attributeName] == null) gameClass[attributeName] = new List<string>();
-                    ((List<string>)gameClass[attributeName]).Add(value);
-                }
-                else
-                {
-                    gameClass[attributeName] = value;
-                }
-            } else if (valueMatch.TokenType == TokenType.Vector3Int)
-            {
-                Vector3Int value = Vector3IntTokenType.Parse(valueMatch.Value);
-                
-                if (isArrayItem)
-                {
-                    if (gameClass[attributeName] == null) gameClass[attributeName] = new List<Vector3Int>();
-                    ((List<Vector3Int>)gameClass[attributeName]).Add(value);
-                }
-                else
-                {
-                    gameClass[attributeName] = value;
-                }
+                gameClass[attributeName] = value;
             }
 
             return AttributeAssignResult.Success;

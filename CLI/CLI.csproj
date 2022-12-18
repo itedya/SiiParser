@@ -60,6 +60,7 @@
         <Compile Include="GameClasses\AccessoryTransmissionData.cs" />
         <Compile Include="GameClasses\AccessoryTruckData.cs" />
         <Compile Include="GameClasses\CountryData.cs" />
+        <Compile Include="GameClasses\LocalizationDb.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
