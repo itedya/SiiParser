@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/itedya/SiiParser#readme",
   "dependencies": {
+    "@types/command-line-args": "^5.2.0",
+    "@types/node": "^18.11.18",
+    "command-line-args": "^5.2.1",
     "typescript": "^4.9.4"
   }
 }
