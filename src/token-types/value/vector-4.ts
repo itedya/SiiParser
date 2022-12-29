@@ -3,7 +3,7 @@ import Vector4 from "../../classes/vector-4";
 import {TokenIdentifier} from "../token-type";
 
 class Vector4TokenType implements IValueTokenType<Vector4> {
-    public readonly regex = new RegExp("(?<=(: |:))\\(-?\\d+\\.\\d+, -?\\d+\\.\\d+, -?\\d+\\.\\d+, -?\\d+\\.\\d+\\)(?=[\\s\\n])");
+    public readonly regex = new RegExp("(?<=(: |:))\\(-?\\d+\\.\\d+, -?\\d+\\.\\d+, -?\\d+\\.\\d+, -?\\d+\\.\\d+\\)(?=[\\s\\n])", 'g');
     public readonly identifier = TokenIdentifier.Vector4;
 
     parse(rawValue: string): Vector4 {

@@ -1,5 +1,6 @@
 import GameClass from "../game-classes/game-class";
 import ITokenType, {TokenIdentifier} from "./token-type";
+import {getSiiUnit} from "../decorators/sii-unit";
 
 class ClassTypeTokenType implements ITokenType {
     public readonly identifier = TokenIdentifier.ClassType;
@@ -7,10 +8,10 @@ class ClassTypeTokenType implements ITokenType {
 
     constructor(gameClasses: GameClass[]) {
         const identifiers = gameClasses.map(gameClass => {
-            return gameClass.namespace;
+            return getSiiUnit(gameClass);
         });
 
-        this.regex = new RegExp("(" + identifiers.join("|") + ")");
+        this.regex = new RegExp("(" + identifiers.join("|") + ")", 'g');
     }
 }
 

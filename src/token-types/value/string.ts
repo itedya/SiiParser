@@ -2,7 +2,7 @@ import IValueTokenType from "./value-token-type";
 import {TokenIdentifier} from "../token-type";
 
 export class StringValueTokenType implements IValueTokenType<string> {
-    public readonly regex = new RegExp("\"(?:\\\\[\"\\\\n]|[^\\n\"\\\\])*\"");
+    public readonly regex = new RegExp("\"(?:\\\\[\"\\\\n]|[^\\n\"\\\\])*\"", 'g');
     public readonly identifier = TokenIdentifier.String;
 
     parse(rawValue: string): string {

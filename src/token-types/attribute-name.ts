@@ -5,7 +5,7 @@ class AttributeNameTokenType implements ITokenType {
     public readonly identifier = TokenIdentifier.AttributeName;
 
     constructor() {
-        this.regex = new RegExp("(?<=\\n(\\t|\\s+))\\w+(\\[(\\d+)?\])?(?=:)");
+        this.regex = new RegExp("(?<=\\n(\\t|\\s+))\\w+(\\[(\\d+)?\])?(?=:)", 'g');
     }
 
     private static arrayIndexRegex = new RegExp("(?<=\\[)\\d+(?=\])");

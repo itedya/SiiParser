@@ -3,7 +3,7 @@ import Vector3Int from "../../classes/vector-3-int";
 import {TokenIdentifier} from "../token-type";
 
 export class Vector3IntValueTokenType implements IValueTokenType<Vector3Int> {
-    public readonly regex = new RegExp("(?<=[ :])\\(-?\\d+, -?\\d+, -?\\d+\\)(?=[\\s\\n])");
+    public readonly regex = new RegExp("(?<=[ :])\\(-?\\d+, -?\\d+, -?\\d+\\)(?=[\\s\\n])", 'g');
     public readonly identifier = TokenIdentifier.Vector3Int;
 
     parse(rawValue: string): Vector3Int {

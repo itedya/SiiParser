@@ -9,7 +9,7 @@ class NamespaceTokenType implements ITokenType {
 
     constructor(gameClasses: GameClass[]) {
         const classIdentifiers = gameClasses.map(gameClass => getSiiUnit(gameClass));
-        this.regex = new RegExp("(?<=(" + classIdentifiers.join("|") + ") : )[a-zA-Z0-9_.]+(?=\n)");
+        this.regex = new RegExp("(?<=(" + classIdentifiers.join("|") + ") : )[a-zA-Z0-9_.]+(?=\n)", 'g');
     }
 }
 
