@@ -6,6 +6,6 @@ export default function SiiUnit(target: GameClass) {
     }
 }
 
-export function GetSiiUnit(target: GameClass) {
+export function getSiiUnit(target: GameClass) {
     return Reflect.getMetadata("sii-unit", target);
 }

@@ -6,6 +6,6 @@ export default function SiiAttribute(target: GameClass, propertyName: string) {
     }
 }
 
-export function GetSiiAttribute(target: GameClass, propertyName: string) {
+export function getSiiAttribute(target: GameClass, propertyName: string) {
     return Reflect.getMetadata("sii-attribute", target, propertyName);
 }
