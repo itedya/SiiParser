@@ -2,7 +2,7 @@ import GameClass from "../game-classes/game-class";
 import ITokenType, {TokenIdentifier} from "./token-type";
 
 class ClassTypeTokenType implements ITokenType {
-    public readonly identifier: string = TokenIdentifier.ClassType;
+    public readonly identifier = TokenIdentifier.ClassType;
     public readonly regex: RegExp;
 
     constructor(gameClasses: GameClass[]) {

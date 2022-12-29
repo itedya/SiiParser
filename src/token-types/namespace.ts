@@ -5,7 +5,7 @@ import ITokenType, {TokenIdentifier} from "./token-type";
 
 class NamespaceTokenType implements ITokenType {
     public readonly regex: RegExp;
-    public readonly identifier: string = TokenIdentifier.Namespace;
+    public readonly identifier = TokenIdentifier.Namespace;
 
     constructor(gameClasses: GameClass[]) {
         const classIdentifiers = gameClasses.map(gameClass => getSiiUnit(gameClass));

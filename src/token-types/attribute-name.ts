@@ -2,7 +2,7 @@ import ITokenType, {TokenIdentifier} from "./token-type";
 
 class AttributeNameTokenType implements ITokenType {
     public readonly regex: RegExp;
-    public readonly identifier: string = TokenIdentifier.AttributeName;
+    public readonly identifier = TokenIdentifier.AttributeName;
 
     constructor() {
         this.regex = new RegExp("(?<=\\n(\\t|\\s+))\\w+(\\[(\\d+)?\])?(?=:)");
