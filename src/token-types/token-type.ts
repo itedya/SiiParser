@@ -1,6 +1,6 @@
 interface ITokenType {
     regex: RegExp;
-    identifier: string;
+    identifier: TokenIdentifier;
 }
 
 enum TokenIdentifier {
