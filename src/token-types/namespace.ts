@@ -1,5 +1,7 @@
 import GameClass from "../game-classes/game-class";
 import {getSiiUnit} from "../decorators/sii-unit";
+import ITokenType, {TokenIdentifier} from "./token-type";
+
 
 class NamespaceTokenType implements ITokenType {
     public readonly regex: RegExp;

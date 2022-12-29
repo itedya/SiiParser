@@ -1,4 +1,6 @@
 import IValueTokenType from "./value-token-type";
+import {TokenIdentifier} from "../token-type";
+
 
 export class TokenValueTokenType implements IValueTokenType<string> {
     public readonly regex = new RegExp("(?<=(\\n(\\t|\\s+))(\\w+(\\[(\\d+)?\\])?)(:|: ))[a-z_]+(?=[\\s\\n])");

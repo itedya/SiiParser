@@ -1,5 +1,6 @@
 import IValueTokenType from "./value-token-type";
 import Vector3Int from "../../classes/vector-3-int";
+import {TokenIdentifier} from "../token-type";
 
 export class Vector3IntValueTokenType implements IValueTokenType<Vector3Int> {
     public readonly regex = new RegExp("(?<=[ :])\\(-?\\d+, -?\\d+, -?\\d+\\)(?=[\\s\\n])");

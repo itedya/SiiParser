@@ -1,3 +1,5 @@
+import ITokenType, {TokenIdentifier} from "./token-type";
+
 class AttributeNameTokenType implements ITokenType {
     public readonly regex: RegExp;
     public readonly identifier: string = TokenIdentifier.AttributeName;

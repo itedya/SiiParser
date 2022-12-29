@@ -1,4 +1,5 @@
 import IValueTokenType from "./value-token-type";
+import {TokenIdentifier} from "../token-type";
 
 export class IntValueTokenType implements IValueTokenType<number> {
     public readonly regex = new RegExp("(?<=(: |:))-?\d+(?=[\s\n])");

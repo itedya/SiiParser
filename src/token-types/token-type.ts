@@ -16,3 +16,8 @@ enum TokenIdentifier {
     Vector3Int = "VECTOR_3_INT",
     Vector4 = "VECTOR_4",
 }
+
+export {
+    ITokenType as default,
+    TokenIdentifier
+}

@@ -1,4 +1,5 @@
 import IValueTokenType from "./value-token-type";
+import {TokenIdentifier} from "../token-type";
 
 export class IntValueTokenType implements IValueTokenType<string> {
     public readonly regex = new RegExp("\"(?:\\\\[\"\\\\n]|[^\\n\"\\\\])*\"");
