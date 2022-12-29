@@ -1,7 +1,7 @@
 import IValueTokenType from "./value-token-type";
 import {TokenIdentifier} from "../token-type";
 
-export class IntValueTokenType implements IValueTokenType<string> {
+export class StringValueTokenType implements IValueTokenType<string> {
     public readonly regex = new RegExp("\"(?:\\\\[\"\\\\n]|[^\\n\"\\\\])*\"");
     public readonly identifier = TokenIdentifier.String;
 
@@ -10,4 +10,4 @@ export class IntValueTokenType implements IValueTokenType<string> {
     }
 }
 
-export default IntValueTokenType;
+export default StringValueTokenType;
