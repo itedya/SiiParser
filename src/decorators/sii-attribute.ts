@@ -1,8 +1,8 @@
 import GameClass from "../game-classes/game-class";
 
-export default function SiiAttribute(target: GameClass, propertyName: string) {
-    return (unitName: string) => {
-        return Reflect.defineMetadata("sii-attribute", unitName, target, propertyName);
+export default function SiiAttribute(unitPropertyName: string) {
+    return (target: GameClass, propertyKey: string) => {
+        return Reflect.defineMetadata("sii-attribute", unitPropertyName, target, propertyKey);
     }
 }
 
