@@ -15,6 +15,7 @@ enum TokenIdentifier {
     UnitToken = "UNIT_TOKEN",
     Vector3Int = "VECTOR_3_INT",
     Vector4 = "VECTOR_4",
+    Vector2 = "VECTOR_2"
 }
 
 export {
