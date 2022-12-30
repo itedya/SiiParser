@@ -8,9 +8,9 @@ class AttributeNameTokenType implements ITokenType {
         this.regex = new RegExp("(?<=\\n(\\t|\\s+))\\w+(\\[(\\d+)?\])?(?=:)", 'g');
     }
 
-    private static arrayIndexRegex = new RegExp("(?<=\\[)\\d+(?=\])");
+    private static arrayIndexRegex = new RegExp("(?<=\\[)\\d+(?=\])", 'g');
 
-    public static removeArrayIndex(attributeName: string) {
+    public static removeArrayIndex(attributeName: string): string {
         return attributeName.replaceAll(this.arrayIndexRegex, "");
     }
 }
