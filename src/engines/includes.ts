@@ -1,16 +1,19 @@
 import path from "path";
-import * as fs from "fs";
+import {readFile} from "fs/promises";
 
-export class IncludesEngine {
+/**
+ * Class used to deal with @include "..." clauses
+ */
+class IncludesEngine {
     private regex: RegExp;
-    private rootDirectory: string;
+    private readonly rootDirectory: string;
 
     constructor(rootDirectory: string) {
         this.rootDirectory = rootDirectory;
         this.regex = new RegExp("@include ?\"[a-zA-Z0-9_./]+\"", 'g');
     }
 
-    public process(content: string, processedFileDirectoryPath: string) {
+    public async process(content: string, processedFileDirectoryPath: string) {
         const matches = [...new Set([...content.matchAll(this.regex)].map(match => match[0]))];
         if (matches.length === 0) {
             return content;
@@ -26,7 +29,7 @@ export class IncludesEngine {
                 includeFilePath = path.join(processedFileDirectoryPath, includeFilePath);
             }
 
-            let includeFileContents = fs.readFileSync(includeFilePath, { encoding: 'utf-8' });
+            let includeFileContents = await readFile(includeFilePath, {encoding: 'utf-8'});
             content = content.replaceAll(match, includeFileContents);
         }
 
