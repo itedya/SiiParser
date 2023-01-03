@@ -5,14 +5,10 @@ class AttributeNameTokenType implements ITokenType {
     public readonly identifier = TokenIdentifier.AttributeName;
 
     constructor() {
-        this.regex = new RegExp("(?<=\\n(\\t|\\s+))\\w+(\\[(\\d+)?\])?(?=:)", 'g');
+        this.regex = new RegExp("^\\w+(\\[(\\d+)?])?(?=:)", 'gm');
     }
 
-    private static arrayIndexRegex = new RegExp("(?<=\\[)\\d+(?=\])", 'g');
 
-    public static removeArrayIndex(attributeName: string): string {
-        return attributeName.replaceAll(this.arrayIndexRegex, "");
-    }
 }
 
 export default AttributeNameTokenType;

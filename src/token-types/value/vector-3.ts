@@ -2,9 +2,9 @@ import IValueTokenType from "./value-token-type";
 import {TokenIdentifier} from "../token-type";
 import Vector3Float from "../../classes/vector-3-float";
 
-export class Vector3FloatValueTokenType implements IValueTokenType<Vector3Float> {
-    public readonly regex = new RegExp("(?<=[ :])\\(-?\\d+\\.\\d+, -?\\d+\\.\\d+, -?\\d+\\.\\d+\\)(?=[\\s\\n])", 'g');
-    public readonly identifier = TokenIdentifier.Vector3Float;
+export class Vector3ValueTokenType implements IValueTokenType<Vector3Float> {
+    public readonly regex = new RegExp("^\\(-?\\d+(\\.\\d+)?,-?\\d+(\\.\\d+)?,-?\\d+(\\.\\d+)?\\)$");
+    public readonly identifier = TokenIdentifier.Vector3;
 
     parse(rawValue: string): Vector3Float {
         rawValue = rawValue.substring(1, rawValue.length);
@@ -21,4 +21,4 @@ export class Vector3FloatValueTokenType implements IValueTokenType<Vector3Float>
     }
 }
 
-export default Vector3FloatValueTokenType;
+export default Vector3ValueTokenType;

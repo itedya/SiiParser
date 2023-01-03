@@ -3,7 +3,7 @@ import {TokenIdentifier} from "../token-type";
 
 
 export class TokenValueTokenType implements IValueTokenType<string> {
-    public readonly regex = new RegExp("(?<=(\\n(\\t|\\s+))(\\w+(\\[(\\d+)?\\])?)(:|: ))[a-z_]+(?=[\\s\\n])", 'g');
+    public readonly regex = new RegExp("^[a-zA-Z0-9_.]+$");
     public readonly identifier = TokenIdentifier.Token;
 
     parse(rawValue: string): string {

@@ -1,68 +1,66 @@
-import RegexMatch from "../classes/regex-match";
-import IValueTokenType from "../token-types/value/value-token-type";
-import ParseException from "../exceptions/parse-exception";
-import {TokenIdentifier} from "../token-types/token-type";
-import AttributeNameTokenType from "../token-types/attribute-name";
+import ParseException from "../exceptions/parse.exception";
+import IEngine, {ContextData} from "./engine";
 import GameClass from "../game-classes/game-class";
+import PropertyDoesNotExistException from "../exceptions/property-does-not-exist.exception";
+import IValueTokenType from "../token-types/value/value-token-type";
+import {debug} from "util";
 
-enum AttributeAssignResult {
-    AbortedAttributeIsArrayLengthIdentifier,
-    Success
-}
-
-class AttributesEngine {
-    private matches: RegexMatch[];
+class AttributesEngine implements IEngine {
     private valueTokenTypes: IValueTokenType<any>[];
 
-    constructor(matches: RegexMatch[], valueTokenTypes: IValueTokenType<any>[]) {
-        this.matches = matches;
+    constructor(valueTokenTypes: IValueTokenType<any>[]) {
         this.valueTokenTypes = valueTokenTypes;
     }
 
-    canAssignAttribute(
-        secondRegexMatch: RegexMatch,
-        thirdRegexMatch: RegexMatch
-    ) {
-        if (this.valueTokenTypes.find(tokenType => secondRegexMatch.tokenType === tokenType.identifier) === undefined) {
-            throw new ParseException("After attribute name, there should be a value!");
-        }
+    private arrayIndexRegex = new RegExp("(?<=\\[)\\d+(?=\])", 'g');
 
-        if (thirdRegexMatch.tokenType != TokenIdentifier.NewLine) {
-            throw new ParseException("After attribute value, there should be a new line!");
+    private removeArrayIndex(attributeName: string): string {
+        return attributeName.replaceAll(this.arrayIndexRegex, "");
+    }
+
+    private isArrayLengthIdentifier(gameClass: GameClass, attribName: string) {
+        try {
+            gameClass.getByAttributeName(`${attribName}[]`)
+            return true;
+        } catch (e) {
+            if (e instanceof PropertyDoesNotExistException) {
+                return false;
+            }
+
+            throw e;
         }
     }
 
-    isAttributeArrayLengthIdentifier(attributeName: string) {
-        const attributeNameWithArrayIdentifier = attributeName + "[]";
-        const matches = this.matches.filter(match => {
-            if (match.tokenType != TokenIdentifier.AttributeName) return false;
-
-            const withRemovedArrayIndex = AttributeNameTokenType.removeArrayIndex(attributeName);
-            return match.tokenType === TokenIdentifier.AttributeName &&
-                withRemovedArrayIndex === attributeNameWithArrayIdentifier;
-        });
-
-        return matches.length >= 1;
+    private firstOrPush(items: any[], item: any) {
+        if (items.length === 0) items.push(item);
+        items[items.length - 1] = item;
+        return items;
     }
 
-    assignAttribute(
-        gameClass: GameClass,
-        attributeNameMatch: RegexMatch,
-        valueMatch: RegexMatch
-    ): AttributeAssignResult {
-        const attributeName = AttributeNameTokenType.removeArrayIndex(attributeNameMatch.value);
-        if (this.isAttributeArrayLengthIdentifier(attributeName)) {
-            return AttributeAssignResult.AbortedAttributeIsArrayLengthIdentifier;
+    async process(contextData: ContextData): Promise<ContextData> {
+        let {unitTokensEngine, extractedItems, lineParts} = contextData;
+
+        const gameClass = extractedItems[extractedItems.length - 1];
+
+        if (!unitTokensEngine.canAssignAttribute()) {
+            throw new ParseException("Can't assign attributes, invalid usage of unit tokens! Invalid file contents.");
+        }
+
+        if (gameClass === undefined) {
+            throw new ParseException("Can't assign attribute if game class is undefined!");
+        }
+
+        const attributeName = this.removeArrayIndex(lineParts[0]);
+        if (this.isArrayLengthIdentifier(gameClass, attributeName)) {
+            return contextData;
         }
 
         const isArrayItem = attributeName.includes("[]");
 
-        const valueTokenType = this.valueTokenTypes.find(valueTokenType => valueMatch.tokenType === valueTokenType.identifier);
-        if (valueTokenType === undefined) {
-            throw new ParseException(`Program wasn't able to find value token type to ${valueMatch.value} match`);
-        }
+        const tokenType = this.valueTokenTypes.find(valueTokenType => valueTokenType.regex.test(lineParts[1]))
 
-        const value = valueTokenType.parse(valueMatch.value);
+        const value = tokenType!.parse(lineParts[1]);
+
         if (isArrayItem) {
             let attributeValue: any[] = gameClass.getByAttributeName(attributeName.substring(0));
 
@@ -78,7 +76,9 @@ class AttributesEngine {
             gameClass.setByAttributeName(attributeName, value);
         }
 
-        return AttributeAssignResult.Success
+        extractedItems = this.firstOrPush(extractedItems, gameClass);
+
+        return {lineParts, extractedItems, unitTokensEngine};
     }
 }
 

@@ -1,9 +1,13 @@
-import ParseException from "../exceptions/parse-exception";
+import ParseException from "../exceptions/parse.exception";
 
 class UnitTokensEngine {
     private openedSiiNunit: boolean;
     private openedSiiNunitBraces: boolean;
     private openedClassBraces: boolean;
+
+    isUnitToken(token: string) {
+        return token === "SiiNunit" || token === "{" || token === "}";
+    }
 
     canCreateClass() {
         return this.openedSiiNunit && this.openedSiiNunitBraces && !this.openedClassBraces;

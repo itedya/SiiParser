@@ -1,16 +1,18 @@
 import commandLineArgs, {OptionDefinition} from "command-line-args";
-import InvalidCmdArgsException from "./exceptions/invalid-cmd-args";
+import InvalidCmdArgsException from "./exceptions/invalid-cmd-args.exception";
 import * as fs from "fs";
 
 class CmdArgs {
     public rootDirectory: string;
     public directoryPath?: string;
-    public filePath?: string
+    public filePath?: string;
+    public output?: string;
 
     private static optionDefinitions: OptionDefinition[] = [
         {name: 'root-dir', alias: 'v', type: String},
         {name: 'dir-path', alias: 'd', type: String},
-        {name: 'file-path', alias: 'f', type: String}
+        {name: 'file-path', alias: 'f', type: String},
+        {name: 'output', alias: 'o', type: String}
     ];
 
     public static parse() {
@@ -45,13 +47,14 @@ class CmdArgs {
             }
         }
 
-        return new CmdArgs(parsed['root-dir'], parsed['dir-path'], parsed['file-path']);
+        return new CmdArgs(parsed['root-dir'], parsed['dir-path'], parsed['file-path'], parsed['output']);
     }
 
-    private constructor(rootDirectory: string, dirPath: string | undefined, filePath: string | undefined) {
+    private constructor(rootDirectory: string, dirPath: string | undefined, filePath: string | undefined, output?: string) {
         this.rootDirectory = rootDirectory;
         this.directoryPath = dirPath;
         this.filePath = filePath;
+        this.output = output;
     }
 }
 

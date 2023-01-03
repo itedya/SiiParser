@@ -1,4 +1,4 @@
-import PropertyDoesNotExist from "../exceptions/property-does-not-exist";
+import PropertyDoesNotExistException from "../exceptions/property-does-not-exist.exception";
 import {getSiiAttribute} from "../decorators/sii-attribute";
 
 interface IIndexable {
@@ -11,7 +11,7 @@ abstract class GameClass {
     public getByAttributeName(attributeName: string): any {
         const propertyName = Object.keys(this).find(property => getSiiAttribute(this, property) === attributeName);
         if (propertyName === undefined) {
-            throw new PropertyDoesNotExist(attributeName);
+            throw new PropertyDoesNotExistException(attributeName);
         } else {
             return (this as IIndexable)[propertyName];
         }
@@ -20,7 +20,7 @@ abstract class GameClass {
     public setByAttributeName(attributeName: string, value: any) {
         const propertyName = Object.keys(this).find(property => getSiiAttribute(this, property) === attributeName);
         if (propertyName === undefined) {
-            throw new PropertyDoesNotExist(attributeName);
+            throw new PropertyDoesNotExistException(attributeName);
         } else {
             Object.assign(this, {[propertyName]: value});
         }

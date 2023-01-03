@@ -6,12 +6,8 @@ class ClassTypeTokenType implements ITokenType {
     public readonly identifier = TokenIdentifier.ClassType;
     public readonly regex: RegExp;
 
-    constructor(gameClasses: GameClass[]) {
-        const identifiers = gameClasses.map(gameClass => {
-            return getSiiUnit(gameClass);
-        });
-
-        this.regex = new RegExp("(" + identifiers.join("|") + ")", 'g');
+    constructor() {
+        this.regex = new RegExp("(?<=\\{\\n)[a-z_]+(?=(:[a-zA-Z0-9_.]+\\n\\{))", 'gm');
     }
 }
 

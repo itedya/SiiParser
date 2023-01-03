@@ -1,10 +1,9 @@
 import IValueTokenType from "./value-token-type";
-import Vector4 from "../../classes/vector-4";
 import {TokenIdentifier} from "../token-type";
 import Vector2 from "../../classes/vector-2";
 
-class Vector2TokenType implements IValueTokenType<Vector2> {
-    public readonly regex = new RegExp("(?<=(: |:))\\(-?\\d+(\\.\\d+)?, -?\\d+(\\.\\d+)?\\)(?=[\\s\\n])", 'g');
+class Vector2ValueTokenType implements IValueTokenType<Vector2> {
+    public readonly regex = new RegExp("^\\(-?\\d+(\\.\\d+)?,-?\\d+(\\.\\d+)?\\)$");
     public readonly identifier = TokenIdentifier.Vector2;
 
     parse(rawValue: string): Vector2 {
@@ -21,4 +20,4 @@ class Vector2TokenType implements IValueTokenType<Vector2> {
     }
 }
 
-export default Vector2TokenType;
+export default Vector2ValueTokenType;
