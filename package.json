@@ -1,0 +1,34 @@
+{
+  "name": "sii-parser",
+  "version": "1.0.0",
+  "description": "App for parsing .sii files' data.",
+  "main": "dist/app.js",
+  "type": "commonjs",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itedya/SiiParser.git"
+  },
+  "keywords": [
+    "sii",
+    "parser"
+  ],
+  "author": "itedya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/itedya/SiiParser/issues"
+  },
+  "homepage": "https://github.com/itedya/SiiParser#readme",
+  "dependencies": {
+    "@types/command-line-args": "^5.2.0",
+    "@types/node": "^18.11.18",
+    "command-line-args": "^5.2.1",
+    "multi-regexp2": "^1.0.3",
+    "reflect-metadata": "^0.1.13",
+    "super-regex": "^0.2.0",
+    "typescript": "^4.9.4"
+  }
+}
