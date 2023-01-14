@@ -7,12 +7,17 @@ class CmdArgs {
     public directoryPath?: string;
     public filePath?: string;
     public output?: string;
+    public ignoreGameClassDoesNotExistException: boolean;
+    public ignorePropertyDoesNotExistException: boolean;
+
 
     private static optionDefinitions: OptionDefinition[] = [
-        {name: 'root-dir', alias: 'v', type: String},
+        {name: 'root-dir', alias: 'r', type: String},
         {name: 'dir-path', alias: 'd', type: String},
         {name: 'file-path', alias: 'f', type: String},
-        {name: 'output', alias: 'o', type: String}
+        {name: 'output', alias: 'o', type: String},
+        {name: 'ignore-missing-game-classes', alias: 'g', type: Boolean},
+        {name: 'ignore-missing-props', alias: 'p', type: Boolean}
     ];
 
     public static parse() {
@@ -47,11 +52,21 @@ class CmdArgs {
             }
         }
 
-        return new CmdArgs(parsed['root-dir'], parsed['dir-path'], parsed['file-path'], parsed['output']);
+        if (parsed['ignore-missing-props'] !== undefined) {
+            parsed['ignore-missing-props'] = true;
+        }
+
+        if (parsed['ignore-missing-game-classes'] !== undefined) {
+            parsed['ignore-missing-game-classes'] = true;
+        }
+
+        return new CmdArgs(parsed['root-dir'], parsed['ignore-missing-game-classes'], parsed['ignore-missing-props'], parsed['dir-path'], parsed['file-path'], parsed['output']);
     }
 
-    private constructor(rootDirectory: string, dirPath: string | undefined, filePath: string | undefined, output?: string) {
+    private constructor(rootDirectory: string, ignoreMissingClasses: boolean, ignoreMissingProps: boolean, dirPath: string | undefined, filePath: string | undefined, output?: string) {
         this.rootDirectory = rootDirectory;
+        this.ignoreGameClassDoesNotExistException = ignoreMissingClasses;
+        this.ignorePropertyDoesNotExistException = ignoreMissingProps;
         this.directoryPath = dirPath;
         this.filePath = filePath;
         this.output = output;

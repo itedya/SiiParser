@@ -121,13 +121,22 @@ export class Parser {
                         extractedItems = contextData.extractedItems;
                     }
                 } catch (e) {
-                    if (e instanceof PropertyDoesNotExistException && !this.throwExceptions.propertyDoesNotExist) continue;
+                    if (e instanceof PropertyDoesNotExistException) {
+                        if (this.throwExceptions.propertyDoesNotExist) {
+                            console.error(e.message);
+                            process.exit(1);
+                        }
+
+                        continue;
+                    }
 
                     throw e;
                 }
             }
         } catch (e) {
-            if (!(e instanceof NoGameClassFoundException && !this.throwExceptions.noGameClassFound)) throw e;
+            if (e instanceof NoGameClassFoundException && this.throwExceptions.noGameClassFound) {
+                console.error(e.message);
+            }
         }
 
         return extractedItems;

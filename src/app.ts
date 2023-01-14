@@ -17,8 +17,8 @@ const main = async () => {
             CountryData
         ],
         throwExceptions: {
-            noGameClassFound: false,
-            propertyDoesNotExist: false
+            noGameClassFound: !args.ignoreGameClassDoesNotExistException,
+            propertyDoesNotExist: !args.ignorePropertyDoesNotExistException
         }
     });
 

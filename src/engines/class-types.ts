@@ -21,7 +21,7 @@ class ClassTypesEngine {
 
         const type = this.getGameClassFromIdentifier(lineParts[0]);
         if (type === undefined) {
-            throw new NoGameClassFoundException();
+            throw new NoGameClassFoundException(lineParts[0]);
         }
 
         extractedItems.push(new type());
