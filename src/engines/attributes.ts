@@ -3,7 +3,6 @@ import IEngine, {ContextData} from "./engine";
 import GameClass from "../game-classes/game-class";
 import PropertyDoesNotExistException from "../exceptions/property-does-not-exist.exception";
 import IValueTokenType from "../token-types/value/value-token-type";
-import {debug} from "util";
 
 class AttributesEngine implements IEngine {
     private valueTokenTypes: IValueTokenType<any>[];
