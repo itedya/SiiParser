@@ -6,6 +6,7 @@ import AccessoryEngineData from "./game-classes/accessory-engine-data";
 import {writeFile} from "fs/promises";
 import CountryData from "./game-classes/country-data";
 import walk from "./walk";
+import LocalizationDb from "./game-classes/localization-db";
 
 const main = async () => {
     const args = CmdArgs.parse();
@@ -14,7 +15,8 @@ const main = async () => {
         gameClassTypes: [
             AccessoryEngineData,
             AccessoryTruckData,
-            CountryData
+            CountryData,
+            LocalizationDb
         ],
         throwExceptions: {
             noGameClassFound: !args.ignoreGameClassDoesNotExistException,
