@@ -30,6 +30,8 @@ npm start -- -r <root_dir> -f <file_path>.sii -o <output_file_path>.json -g -p
 npm start -- -r <root_dir> -d <directory_path> -o <output_file_path>.json -g -p
 ```
 
+If you use compiled version, replace "npm start --" for "SiiParser" (linux executable filename).
+
 ## Adding your own Game Classes
 
 1. Create file with .ts extension in /src/game-classes
