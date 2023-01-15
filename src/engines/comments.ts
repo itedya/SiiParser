@@ -10,7 +10,7 @@ class CommentsEngine {
             let character = content[i];
             let nextCharacter = content[i + 1];
 
-            if (character === "\"" && prevCharacter != "\\" && !inComment && !inMultilineComment) {
+            if (character === "\"" && prevCharacter !== "\\" && !inComment && !inMultilineComment) {
                 inDoubleQuotes = !inDoubleQuotes;
             } else {
                 if (character === "/" && nextCharacter === "*" && !inMultilineComment && !inComment) {

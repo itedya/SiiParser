@@ -7,9 +7,10 @@ class WhitespacesEngine {
         let inDoubleColons = false;
 
         for (let i = 0; i < input.length; i++) {
+            const prevCharacter = (i !== 0) ? input[i - 1] : null;
             const character = input[i];
 
-            if (character === '"') {
+            if (character === '"' && prevCharacter !== '\\') {
                 inDoubleColons = !inDoubleColons;
                 continue;
             }

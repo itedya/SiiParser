@@ -77,7 +77,7 @@ export class Parser {
         } else if (lineParts.length >= 3) {
             return [
                 lineParts[0],
-                ...lineParts.slice(1, lineParts.length).join(":")
+                lineParts.slice(1, lineParts.length).join(":")
             ];
         } else {
             throw new ParseException(`Can't join line ${lineParts}`);
