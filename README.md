@@ -15,7 +15,7 @@ App for parsing .sii files' data to json format.
 
 ## Warning
 
-This app is missing lots of classes that exist in game files. I only added these that I needed. Probably you have to add
+This app is missing lots of classes that exist in game files. I only added those that I needed. You probably will have to add
 some yourself and recompile it.
 
 Same thing may be needed for value types (string, int, token, etc.), there are only few defined.
